@@ -1,12 +1,17 @@
 package yarvol.models
 
 import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.sql.Table
 
 @Serializable
 data class Todo(
-    val id: String,
-    val title: String,
+    val id: Int = 0,
     val body: String
 )
 
-val todoStorage = mutableListOf<Todo>()
+object Todos : Table() {
+    val id = integer("id").autoIncrement()
+    val body = varchar("title", 1024)
+
+    override val primaryKey = PrimaryKey(id)
+}
