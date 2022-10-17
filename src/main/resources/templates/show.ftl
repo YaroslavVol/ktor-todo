@@ -3,8 +3,11 @@
 <@layout.header>
     <div>
             <h3>
-                ${todo.body}
+                ${todo.title}
             </h3>
+            <p>
+                ${todo.body}
+            </p>
             <hr>
             <p>
                 <a href="/todos/${todo.id}/edit">Edit todo</a>

@@ -9,6 +9,7 @@ import yarvol.models.Todos
 class DAOTodoImpl : DAOFacade<Todo> {
     private fun resultRowToTodo(row: ResultRow) = Todo(
         id = row[Todos.id],
+        title = row[Todos.title],
         body = row[Todos.body]
     )
 
@@ -25,6 +26,7 @@ class DAOTodoImpl : DAOFacade<Todo> {
 
     override suspend fun insert(type: Todo): Todo? = dbQuery {
         val insertStatement = Todos.insert {
+            it[Todos.title] = type.title
             it[Todos.body] = type.body
         }
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToTodo)
@@ -32,6 +34,7 @@ class DAOTodoImpl : DAOFacade<Todo> {
 
     override suspend fun edit(id: Int, type: Todo): Boolean = dbQuery {
         Todos.update({ Todos.id eq id }) {
+            it[Todos.title] = type.title
             it[Todos.body] = type.body
         } > 0
     }
@@ -41,10 +44,10 @@ class DAOTodoImpl : DAOFacade<Todo> {
     }
 }
 
-val dao: DAOFacade<Todo> = DAOTodoImpl().apply {
+val daoTodo: DAOFacade<Todo> = DAOTodoImpl().apply {
     runBlocking {
         if(selectAll().isEmpty()) {
-            insert(Todo(body = "Empty todo"))
+            insert(Todo(title = "Empty todo",body = "Empty todo"))
         }
     }
 }

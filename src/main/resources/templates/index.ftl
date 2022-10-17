@@ -4,7 +4,7 @@
     <#list todos?reverse as todo>
         <div>
             <h3>
-                <a href="/todos/${todo.id}">${todo.body}</a>
+                <a href="/todos/${todo.id}">${todo.title}</a>
             </h3>
         </div>
     </#list>

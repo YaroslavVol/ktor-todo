@@ -5,6 +5,9 @@
         <h3>Edit todo</h3>
         <form action="/todos/${todo.id}" method="post">
             <p>
+                <input type="text" name="title" value="${todo.title}">
+            </p>
+            <p>
                 <input type="text" name="body" value="${todo.body}">
             </p>
             <p>
